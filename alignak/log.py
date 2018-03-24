@@ -124,6 +124,9 @@ def setup_logger(logger_configuration_file, log_dir=None, process_name='', log_f
 
     If a log file name is provide, it will override the default defined log file name.
 
+    At first, this function checks if the logger is still existing and initialized to
+    update the handlers and formatters. This mainly happens during the unit tests.
+
     :param logger_configuration_file: Python Json logger configuration file
     :rtype logger_configuration_file: str
     :param log_dir: default log directory to update the defined logging handlers
@@ -141,7 +144,7 @@ def setup_logger(logger_configuration_file, log_dir=None, process_name='', log_f
     logger_ = logging.getLogger(ALIGNAK_LOGGER_NAME)
     for handler in logger_.handlers:
         if getattr(handler, '_name', None) == 'daemons':
-            # Already configured... exit
+            # Already configured...
             # Update the declared formats with the process name
             for hdlr in logger_.handlers:
                 if process_name and 'alignak_tests' in hdlr.formatter._fmt:

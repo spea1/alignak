@@ -1018,9 +1018,10 @@ class Daemon(object):
                 self.do_loop_turn()
                 statsmgr.timer('loop-turn', time.time() - _ts)
             else:
-                logger.info("+++ loop %d, did not yet received my configuration", self.loop_count)
+                logger.info("+++ loop %d, I do not have a configuration", self.loop_count)
 
             # Daemon load
+            # TODO this measurement needs to be made reliable (check and adapt if needed)
             self.load_1_min.update_load(self.maximum_loop_duration - elapsed_time)
             statsmgr.gauge('load_1_min', self.load_1_min.get_load())
             if self.log_loop:
@@ -1072,7 +1073,7 @@ class Daemon(object):
 
             pause = self.maximum_loop_duration - loop_duration
             if loop_duration > self.maximum_loop_duration:
-                logger.warning("The %s %s loop exceeded the maximum expected loop duration: %.2f. "
+                logger.warning("The %s %s loop exceeded the maximum expected loop duration (%.2f). "
                                "The last loop needed %.2f seconds to execute. "
                                "You should try to reduce the load on this %s.",
                                self.type, self.name, self.maximum_loop_duration,
