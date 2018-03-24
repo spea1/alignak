@@ -664,8 +664,11 @@ class Daemon(object):
         self.lock = threading.RLock()
 
         # Configuration dispatch
-        # when self.new_conf is not None, the arbiter sent a new configuration to manage
+        # when self.new_conf is not empty, the arbiter sent a new configuration to manage
         self.new_conf = {}
+        # when self.cur_conf is not None or empty, the daemon has received and manages a
+        # configuration from the arbiter
+        self.have_conf = False
         self.cur_conf = {}
         # Specific Semaphore for the configuration
         self.conf_lock = threading.RLock()
@@ -1010,7 +1013,7 @@ class Daemon(object):
 
             # Each loop turn, execute the daemon specific treatment...
             # only if the daemon has a configuration to manage
-            if self.cur_conf:
+            if self.have_conf:
                 _ts = time.time()
                 self.do_loop_turn()
                 statsmgr.timer('loop-turn', time.time() - _ts)

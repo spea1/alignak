@@ -34,7 +34,6 @@ the Alignak broker.
 """
 from __future__ import print_function
 import os
-# import sys
 import json
 import time
 
@@ -45,11 +44,17 @@ from termcolor import cprint
 
 from alignak.brok import Brok
 
+# -----
+# When deprecating Python 2.6, change this and replace with
 from alignak.misc.dictconfig import dictConfig as logger_dictConfig
+# import sys
 # if sys.version_info < (2, 7):
 #     from alignak.misc.dictconfig import dictConfig as logger_dictConfig
 # else:
 #     from logging.config import dictConfig as logger_dictConfig
+# -----
+# this:
+# from logging.config import dictConfig as logger_dictConfig
 
 # Default values for root logger
 ALIGNAK_LOGGER_NAME = 'alignak'
