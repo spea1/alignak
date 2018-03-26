@@ -736,6 +736,8 @@ class Arbiter(Daemon):  # pylint: disable=R0902
         # Display found warnings and errors
         self.conf.show_errors()
 
+        # Now I have a configuration!
+        self.have_conf = True
         self.loading_configuration = False
 
     def request_stop(self, message='', exit_code=0):
